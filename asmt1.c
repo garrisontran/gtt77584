@@ -3,11 +3,13 @@
 #include <unistd.h>
 #include <math.h>
 
-char ch[9];
+char ch[9],ch2[8];
 int fd,bytes;
 /*********************************************/
 int main(int argc, char *argv[])
 {
+ char *a[34]={"NUL","SOH","STX","ETX","EOT","ENQ","ACK","BEL","BS","HT","LF","VT","FF","CR","SO","SI","DLE","DC1","DC2","DC3","DC4","NAK","SYN","ETB","CAN","EM","SUB","ESC","FS","GS","RS","US","SPACE","DEL"};
+ char *p[3]={"EVEN","ODD"};
  if (argc > 2)
  {
   printf("too many arguments");
@@ -28,15 +30,41 @@ int main(int argc, char *argv[])
   fd = 0;
  }
  
- bytes = read(fd,ch,8);
  printf("Original Ascii Decimal Parity\n");
  printf("-------- ----- ------- ------\n");
- if (*argv[1]!='-')
+ while((bytes = read(fd,ch,9))>0)
  {
-  printf("%8s ",ch);
-  //printf("%5c ",
-  printf("%7d ",decimal(ch));
+  int b;
+  /*int u = 0;
+  while (ch[u]!='\0')
+  {
+   strcpy(ch2[u],ch[u]);
+   u++;
+  }*/
+  if (bytes<8)
+  {
+   for (b=bytes;b<8;b++)
+   {
+    ch[b]='0';
+   }
+  }
+  if (*argv[1]!='-')
+  {
+   printf("%8s ",ch);
+   if (decimal(ch)<=33||decimal(ch)==127)
+   {
+    if (decimal(ch)==127)
+     printf("%4s ",a[33]);
+    else
+     printf("%4s ",a[decimal(ch)]);
+   }
+   else 
+    printf("%4c ",decimal(ch));
+   printf("%7d ",decimal(ch));
+   printf("%7s\n",p[rity(ch)]);
+  }
  }
+ 
 }
 
 int decimal(char *x)
@@ -52,25 +80,13 @@ int decimal(char *x)
  return d;
 } 
 
-int getAscii(char *a)
-{
- int n = decimal(a);
- //if (n<33 || n == 127)
- return n;
-}
-
-/*char par(char *p)
+int rity(char *p)
 {
  int parity = 0;
  int i = 1;
- char r[1]={"EVEN","ODD"};
- for (i=8;i>0;i--)
+ for (i=7;i>0;i--)
  {
   parity = parity^(p[i]-'0');
  }
- if (parity==0)
-  r[1] = "EVEN";
- else 
-  r[1] = "ODD";
- return r;
-}*/
+ return parity;
+}
