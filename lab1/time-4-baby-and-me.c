@@ -19,8 +19,8 @@ int main()
  }
  else 
  {
-  wait(&status);
-  printf("PPID: %d PID: %d CPID: %d RETVAL: %d\n",getppid(),getpid(),pid,id);
+  wait(pid,&status);
+  printf("PPID: %d PID: %d CPID: %d RETVAL: %d\n",getppid(),getpid(),id,pid);
  }
  times(&clk);
  printf("USER: %d SYS: %d\nCUSER: %d CSYS: %d\n",clk.tms_utime,clk.tms_stime,clk.tms_cutime,clk.tms_cstime);
