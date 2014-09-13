@@ -1,0 +1,18 @@
+Name: Garrison Tran
+Project: Time-4-baby-and-me
+
+EXECUTABLES=time-4-baby-and-me
+SRC=time-4-baby-and-me.c
+OBJ=time-4-baby-and-me.o
+
+CC=gcc
+CFLAGS=-g
+
+ALL: $time-4-baby-and-me
+
+$time-4-baby-and-me: $time-4-baby-and-me.c
+	$gcc $-g -c $time-4-baby-and-me.c
+	$gcc $-g -o $time-4-baby-and-me.o
+
+
+
